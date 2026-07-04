@@ -1,32 +1,52 @@
-FROM richarvey/nginx-php-fpm:3.1.6
+FROM php:8.4-fpm-alpine
+
+# Install system dependencies
+RUN apk add --no-cache \
+    nginx \
+    supervisor \
+    nodejs \
+    npm \
+    postgresql-dev \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
+    libzip-dev \
+    zip \
+    unzip \
+    curl \
+    bash
+
+# Install PHP extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_pgsql pgsql gd zip bcmath opcache
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Install additional system packages
-RUN apk add --no-interactive --no-cache nodejs npm postgresql-client
-
 # Copy application files
 COPY . .
 
-# Set permissions
-RUN chown -R nginx:nginx /var/www/html/storage /var/www/html/bootstrap/cache
+# Install Composer dependencies at build time
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install \
+    --no-dev \
+    --optimize-autoloader \
+    --no-interaction
 
-# Expose port
+# Install npm dependencies and build Vite assets
+RUN npm install && npm run build
+
+# Set permissions
+RUN mkdir -p /run/nginx \
+    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Copy nginx and supervisor configs
+COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 EXPOSE 80
 
-# Environment variables for richarvey/nginx-php-fpm
-ENV WEBROOT /var/www/html/public
-ENV APP_ENV production
-ENV APP_DEBUG false
-ENV RUN_SCRIPTS 1
-
-# The image will automatically run scripts in /var/www/html/conf/http/hooks or execute command
-# We can tell it to run our shell script as entrypoint or hook.
-# Let's configure the richarvey startup script hook.
-RUN mkdir -p /var/www/html/conf/http/
-COPY scripts/00-laravel-deploy.sh /var/www/html/conf/http/00-laravel-deploy.sh
-RUN chmod +x /var/www/html/conf/http/00-laravel-deploy.sh
-
-# Start command
-ENTRYPOINT ["/bin/bash", "-c", "/var/www/html/conf/http/00-laravel-deploy.sh && /start.sh"]
+ENTRYPOINT ["/bin/bash", "/var/www/html/scripts/railway-start.sh"]
