@@ -32,31 +32,41 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // ===== Products (Admin & Staff) =====
+    // ===== Products WRITE — Admin & Staff only =====
+    // (Must be defined BEFORE the parameterized read routes to avoid /create being matched as {product})
     Route::middleware(['role:admin|staff'])->group(function () {
-        Route::resource('products', ProductController::class);
-        Route::resource('categories', CategoryController::class)->except(['show', 'create', 'edit']);
-    });
+        Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+        Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+        Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+        Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+        Route::patch('/products/{product}', [ProductController::class, 'update']);
+        Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
-    // Products read-only for managers (index & show only, no name re-registration)
-    Route::middleware(['role:manager'])->group(function () {
-        Route::get('/products', [ProductController::class, 'index'])->name('manager.products.index');
-        Route::get('/products/{product}', [ProductController::class, 'show'])->name('manager.products.show');
-    });
+        Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+        Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+        Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+        Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+        Route::patch('/categories/{category}', [CategoryController::class, 'update']);
+        Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
-    // ===== Borrowings (Admin & Staff) =====
-    Route::middleware(['role:admin|staff'])->group(function () {
-        Route::resource('borrowings', BorrowingController::class)->except(['edit', 'update', 'destroy']);
+        Route::get('/borrowings/create', [BorrowingController::class, 'create'])->name('borrowings.create');
+        Route::post('/borrowings', [BorrowingController::class, 'store'])->name('borrowings.store');
         Route::post('/borrowings/{borrowing}/return', [BorrowingController::class, 'returnItems'])->name('borrowings.return');
     });
 
-    // Borrowings read-only for managers (no name re-registration)
-    Route::middleware(['role:manager'])->group(function () {
-        Route::get('/borrowings', [BorrowingController::class, 'index'])->name('manager.borrowings.index');
-        Route::get('/borrowings/{borrowing}', [BorrowingController::class, 'show'])->name('manager.borrowings.show');
+    // ===== Products READ — All roles =====
+    Route::middleware(['role:admin|staff|manager'])->group(function () {
+        Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+        Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+
+        Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+        Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+
+        Route::get('/borrowings', [BorrowingController::class, 'index'])->name('borrowings.index');
+        Route::get('/borrowings/{borrowing}', [BorrowingController::class, 'show'])->name('borrowings.show');
     });
 
-    // ===== Big Data Dashboard (All roles) =====
+    // ===== Big Data Dashboard — All roles =====
     Route::prefix('big-data')->name('bigdata.')->group(function () {
         Route::get('/', [BigDataController::class, 'index'])->name('index');
         Route::post('/spark/analyze', [BigDataController::class, 'runSparkAnalysis'])->name('spark.analyze');
@@ -67,7 +77,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/stats', [BigDataController::class, 'getStats'])->name('stats');
     });
 
-    // ===== Reports (Admin & Manager) =====
+    // ===== Reports — Admin & Manager =====
     Route::middleware(['role:admin|manager'])->prefix('reports')->name('reports.')->group(function () {
         Route::get('/', [ReportController::class, 'index'])->name('index');
         Route::get('/products/pdf', [ReportController::class, 'exportProductsPdf'])->name('products.pdf');

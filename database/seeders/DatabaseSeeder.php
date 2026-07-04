@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($categories as $cat) {
-            Category::create($cat);
+            Category::firstOrCreate(['name' => $cat['name']], $cat);
         }
 
         // ===== Create Products =====
@@ -74,7 +74,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($products as $prod) {
-            Product::create($prod);
+            Product::firstOrCreate(['kode_barang' => $prod['kode_barang']], $prod);
         }
 
         // ===== Create Sample Borrowings =====
