@@ -48,5 +48,6 @@ COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 EXPOSE 80
+ENV PORT=80
 
 ENTRYPOINT ["/bin/bash", "/var/www/html/scripts/railway-start.sh"]
