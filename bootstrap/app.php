@@ -12,6 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Trust all proxies — required for HTTPS detection behind Railway's reverse proxy
+        $middleware->trustProxies(at: '*');
+
         // Register Spatie Role & Permission Middleware aliases for Laravel 11
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
