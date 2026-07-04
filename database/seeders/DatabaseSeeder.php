@@ -16,34 +16,28 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // ===== Create Roles =====
-        $adminRole = Role::create(['name' => 'admin']);
-        $staffRole = Role::create(['name' => 'staff']);
-        $managerRole = Role::create(['name' => 'manager']);
+        // ===== Create Roles (idempotent) =====
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $staffRole = Role::firstOrCreate(['name' => 'staff']);
+        $managerRole = Role::firstOrCreate(['name' => 'manager']);
 
-        // ===== Create Users =====
-        $admin = User::create([
-            'name' => 'Administrator',
-            'email' => 'admin@telkomsel.co.id',
-            'password' => Hash::make('password'),
-            'email_verified_at' => now(),
-        ]);
+        // ===== Create Users (idempotent) =====
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@telkomsel.co.id'],
+            ['name' => 'Administrator', 'password' => Hash::make('password'), 'email_verified_at' => now()]
+        );
         $admin->assignRole('admin');
 
-        $staff = User::create([
-            'name' => 'Staff Inventaris',
-            'email' => 'staff@telkomsel.co.id',
-            'password' => Hash::make('password'),
-            'email_verified_at' => now(),
-        ]);
+        $staff = User::firstOrCreate(
+            ['email' => 'staff@telkomsel.co.id'],
+            ['name' => 'Staff Inventaris', 'password' => Hash::make('password'), 'email_verified_at' => now()]
+        );
         $staff->assignRole('staff');
 
-        $manager = User::create([
-            'name' => 'Manager Operasional',
-            'email' => 'manager@telkomsel.co.id',
-            'password' => Hash::make('password'),
-            'email_verified_at' => now(),
-        ]);
+        $manager = User::firstOrCreate(
+            ['email' => 'manager@telkomsel.co.id'],
+            ['name' => 'Manager Operasional', 'password' => Hash::make('password'), 'email_verified_at' => now()]
+        );
         $manager->assignRole('manager');
 
         // ===== Create Categories =====

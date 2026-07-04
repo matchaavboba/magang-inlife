@@ -38,10 +38,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('categories', CategoryController::class)->except(['show', 'create', 'edit']);
     });
 
-    // Products read-only for managers
-    Route::middleware(['role:admin|staff|manager'])->group(function () {
-        Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-        Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+    // Products read-only for managers (index & show only, no name re-registration)
+    Route::middleware(['role:manager'])->group(function () {
+        Route::get('/products', [ProductController::class, 'index'])->name('manager.products.index');
+        Route::get('/products/{product}', [ProductController::class, 'show'])->name('manager.products.show');
     });
 
     // ===== Borrowings (Admin & Staff) =====
@@ -50,10 +50,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/borrowings/{borrowing}/return', [BorrowingController::class, 'returnItems'])->name('borrowings.return');
     });
 
-    // Borrowings read-only for managers
-    Route::middleware(['role:admin|staff|manager'])->group(function () {
-        Route::get('/borrowings', [BorrowingController::class, 'index'])->name('borrowings.index');
-        Route::get('/borrowings/{borrowing}', [BorrowingController::class, 'show'])->name('borrowings.show');
+    // Borrowings read-only for managers (no name re-registration)
+    Route::middleware(['role:manager'])->group(function () {
+        Route::get('/borrowings', [BorrowingController::class, 'index'])->name('manager.borrowings.index');
+        Route::get('/borrowings/{borrowing}', [BorrowingController::class, 'show'])->name('manager.borrowings.show');
     });
 
     // ===== Big Data Dashboard (All roles) =====
