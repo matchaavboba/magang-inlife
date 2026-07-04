@@ -1,38 +1,37 @@
 services:
-  # Web application service
   - type: web
     name: inventaris-telkomsel
     env: docker
     plan: free
-    dockerfilepath: Dockerfile
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: APP_NAME
-        value: "Inventaris Telkomsel"
+        value: Inventaris Telkomsel
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
-        value: "false"
+        value: false
       - key: APP_URL
-        value: https://inventaris-telkomsel.onrender.com # Change this to your final Render URL
+        value: https://inventaris-telkomsel.onrender.com
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
         fromDatabase:
-          databaseName: inventaris-db
+          name: inventaris-db
           property: host
       - key: DB_PORT
         value: 5432
       - key: DB_DATABASE
         fromDatabase:
-          databaseName: inventaris-db
+          name: inventaris-db
           property: database
       - key: DB_USERNAME
         fromDatabase:
-          databaseName: inventaris-db
+          name: inventaris-db
           property: user
       - key: DB_PASSWORD
         fromDatabase:
-          databaseName: inventaris-db
+          name: inventaris-db
           property: password
       - key: APP_KEY
         generateValue: true
@@ -44,7 +43,7 @@ services:
         value: database
 
 databases:
-  # Managed PostgreSQL database service
   - name: inventaris-db
     plan: free
-    postgresMajorVersion: 15
+    databaseName: inventaris_telkomsel
+    user: inventaris_user
