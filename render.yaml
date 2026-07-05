@@ -6,7 +6,7 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: APP_NAME
-        value: Inventaris Telkomsel
+        value: Sistem Manajemen Inventaris
       - key: APP_ENV
         value: production
       - key: APP_DEBUG

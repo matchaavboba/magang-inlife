@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -47,7 +47,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>PT Telkomsel — Laporan Inventaris Barang</h1>
+        <h1>Laporan Inventaris Barang</h1>
         <p>Dicetak pada: {{ $generated_at }}</p>
     </div>
 
@@ -79,7 +79,7 @@
     </table>
 
     <div class="footer">
-        Sistem Manajemen Inventaris PT Telkomsel
+        Sistem Manajemen Inventaris &amp; Big Data Simulator
     </div>
 </body>
 </html>

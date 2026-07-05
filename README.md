@@ -1,6 +1,6 @@
-# Sistem Manajemen Inventaris PT Telkomsel & Big Data Simulator
+﻿# Sistem Manajemen Inventaris & Big Data Simulator
 
-Aplikasi Prototype Manajemen Inventaris Kantor PT Telkomsel yang dibangun menggunakan **Laravel 11**, **Tailwind CSS 4**, dan **PostgreSQL/SQLite**, serta dilengkapi **Simulasi Pipeline Big Data (Apache Kafka, Apache Spark, & Hadoop MapReduce)**.
+Aplikasi Prototype Manajemen Inventaris Kantor yang dibangun menggunakan **Laravel 11**, **Tailwind CSS 4**, dan **PostgreSQL/SQLite**, serta dilengkapi **Simulasi Pipeline Big Data (Apache Kafka, Apache Spark, & Hadoop MapReduce)**.
 
 ---
 
@@ -89,9 +89,9 @@ php artisan serve
 Akses aplikasi melalui browser di: **`http://127.0.0.1:8000`**
 
 ### 🔑 Kredensial Login Demo
-- **Admin**: `admin@telkomsel.co.id` | password: `password`
-- **Staff**: `staff@telkomsel.co.id` | password: `password`
-- **Manager**: `manager@telkomsel.co.id` | password: `password`
+- **Admin**: `admin@inventaris.app` | password: `password`
+- **Staff**: `staff@inventaris.app` | password: `password`
+- **Manager**: `manager@inventaris.app` | password: `password`
 
 ---
 

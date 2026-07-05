@@ -1,4 +1,4 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot:title>Dashboard</x-slot:title>
 
     <div class="space-y-6">
@@ -8,7 +8,7 @@
                 Selamat datang, {{ Auth::user()->name }} 👋
             </h2>
             <p class="text-sm dark:text-gray-400 text-gray-500 mt-1">
-                Ringkasan inventaris kantor PT Telkomsel — {{ now()->format('l, d F Y') }}
+                Ringkasan inventaris kantor {{ now()->format('l, d F Y') }}
             </p>
         </div>
 

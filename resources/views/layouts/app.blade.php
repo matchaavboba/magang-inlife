@@ -1,12 +1,12 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" x-data x-init="$store.darkMode.init()" :class="{ 'dark': $store.darkMode.on }">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="Sistem Manajemen Inventaris PT Telkomsel — Kelola inventaris kantor secara efisien">
+    <meta name="description" content="Sistem Manajemen Inventaris Kelola inventaris kantor secara efisien">
 
-    <title>{{ $title ?? 'Dashboard' }} — Inventaris Telkomsel</title>
+    <title>{{ $title ?? 'Dashboard' }} — Sistem Manajemen Inventaris</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,7 +66,7 @@
                     </div>
                     <div>
                         <h1 class="text-sm font-bold dark:text-white text-gray-900">Inventaris</h1>
-                        <p class="text-xs dark:text-gray-400 text-gray-500">PT Telkomsel</p>
+                        <p class="text-xs dark:text-gray-400 text-gray-500">Sistem Inventaris</p>
                     </div>
                 </div>
             </div>

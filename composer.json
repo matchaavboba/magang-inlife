@@ -1,8 +1,8 @@
 {
-    "name": "telkomsel/inventaris",
+    "name": "app/inventaris",
     "type": "project",
-    "description": "Sistem Manajemen Inventaris PT Telkomsel",
-    "keywords": ["laravel", "inventory", "telkomsel"],
+    "description": "Sistem Manajemen Inventaris & Big Data Simulator",
+    "keywords": ["laravel", "inventory", "bigdata"],
     "license": "MIT",
     "require": {
         "php": "^8.2",

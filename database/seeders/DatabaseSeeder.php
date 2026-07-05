@@ -23,19 +23,19 @@ class DatabaseSeeder extends Seeder
 
         // ===== Create Users (idempotent) =====
         $admin = User::firstOrCreate(
-            ['email' => 'admin@telkomsel.co.id'],
+            ['email' => 'admin@inventaris.app'],
             ['name' => 'Administrator', 'password' => Hash::make('password'), 'email_verified_at' => now()]
         );
         $admin->assignRole('admin');
 
         $staff = User::firstOrCreate(
-            ['email' => 'staff@telkomsel.co.id'],
+            ['email' => 'staff@inventaris.app'],
             ['name' => 'Staff Inventaris', 'password' => Hash::make('password'), 'email_verified_at' => now()]
         );
         $staff->assignRole('staff');
 
         $manager = User::firstOrCreate(
-            ['email' => 'manager@telkomsel.co.id'],
+            ['email' => 'manager@inventaris.app'],
             ['name' => 'Manager Operasional', 'password' => Hash::make('password'), 'email_verified_at' => now()]
         );
         $manager->assignRole('manager');

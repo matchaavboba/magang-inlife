@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" x-data x-init="$store.darkMode.init()" :class="{ 'dark': $store.darkMode.on }">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Daftar — Inventaris Telkomsel</title>
+    <title>Daftar — Sistem Manajemen Inventaris</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -21,7 +21,7 @@
                 </svg>
             </div>
             <h1 class="text-xl font-bold dark:text-white text-gray-900">Sistem Inventaris Kantor</h1>
-            <p class="text-xs dark:text-gray-400 text-gray-500 mt-1">PT Telkomsel</p>
+            <p class="text-xs dark:text-gray-400 text-gray-500 mt-1">Sistem Inventaris</p>
         </div>
 
         <!-- Register Card -->
@@ -41,7 +41,7 @@
                 <!-- Email -->
                 <div>
                     <label class="block text-xs font-semibold dark:text-gray-400 text-gray-600 uppercase tracking-wider mb-1">Email</label>
-                    <input type="email" name="email" value="{{ old('email') }}" class="form-input" placeholder="name@telkomsel.co.id" required autocomplete="username">
+                    <input type="email" name="email" value="{{ old('email') }}" class="form-input" placeholder="nama@email.com" required autocomplete="username">
                     @error('email') <p class="text-xs text-red-400 mt-1">{{ $message }}</p> @enderror
                 </div>
 
